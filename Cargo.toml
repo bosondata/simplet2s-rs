@@ -1,0 +1,17 @@
+[package]
+authors = ["Messense Lv <messense@icloud.com>"]
+build = "build.rs"
+homepage = "https://github.com/bosondata/simplet2s-rs"
+license = "MIT"
+name = "simplet2s"
+readme = "README.md"
+repository = "https://github.com/bosondata/simplet2s-rs"
+version = "0.1.0"
+
+[build-dependencies]
+phf_codegen = "0.7"
+
+[dependencies]
+lazy_static = "1.0"
+maplit = "1.0"
+phf = "0.7"
