@@ -26,9 +26,13 @@ script:
     if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 sh manylinux.sh;
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_i686 sh manylinux.sh;
+      pip install twine;
+      python setup.py sdist
+      twine upload --skip-existing dist/*;
     fi
   - |
-    if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_RUST_VERSION" == "stable"]]; then
-      pip install -U wheel;
+    if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
+      pip install -U wheel twine;
       python setup.py bdist_wheel;
+      twine upload --skip-existing dist/*;
     fi
