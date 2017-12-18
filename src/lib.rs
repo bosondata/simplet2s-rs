@@ -46,7 +46,7 @@ lazy_static! {
 
 fn word_on_prefix(char_indices: &[char], index: usize) -> Option<String> {
     if index + 1 < char_indices.len() {
-        /// XXX: Avoid allocation?
+        // XXX: Avoid allocation?
         return Some(format!("{}{}", char_indices[index], char_indices[index + 1]));
     }
     None
@@ -54,7 +54,7 @@ fn word_on_prefix(char_indices: &[char], index: usize) -> Option<String> {
 
 fn word_on_suffix(char_indices: &[char], index: usize) -> Option<String> {
     if index > 0 {
-        /// XXX: Avoid allocation?
+        // XXX: Avoid allocation?
         return Some(format!("{}{}", char_indices[index - 1], char_indices[index]));
     }
     None
