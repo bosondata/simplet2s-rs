@@ -1,5 +1,4 @@
 sudo: required
-osx_version: xcode7.3
 language: rust
 rust:
   - stable
@@ -15,6 +14,7 @@ services:
 matrix:
   include:
     - os: osx
+      osx_image: xcode7.3
       rust: stable
 
 before_script:
