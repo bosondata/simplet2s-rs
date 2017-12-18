@@ -14,6 +14,7 @@ services:
 matrix:
   include:
     - os: osx
+      osx_version: xcode7.3
       rust: stable
 
 before_script:
@@ -28,10 +29,10 @@ script:
   - travis-cargo --only nightly bench
   - |
     if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
+      python setup.py sdist
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 sh manylinux.sh;
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_i686 sh manylinux.sh;
       pip install twine;
-      python setup.py sdist
       twine upload --skip-existing dist/*;
     fi
   - |
