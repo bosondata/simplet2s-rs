@@ -17,7 +17,11 @@ matrix:
       rust: stable
 
 before_script:
-  - pip install 'travis-cargo<0.2' --user && export PATH=$HOME/.local/bin:$PATH
+  - sudo easy_install virtualenv
+  - virtualenv ~/virtualenv
+  - source ~/virtualenv/bin/activate
+  - export PATH=$HOME/virtualenv/bin:$PATH
+  - pip install 'travis-cargo<0.2'
 
 script:
   - travis-cargo test
