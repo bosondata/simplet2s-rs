@@ -2,8 +2,6 @@ extern crate simplet2s;
 
 use std::mem;
 use std::ptr;
-use std::str;
-use std::slice;
 use std::ffi::CStr;
 use std::os::raw::c_char;
 
