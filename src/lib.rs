@@ -44,16 +44,16 @@ lazy_static! {
     };
 }
 
-fn word_on_prefix(text: &str, c: &str, index: usize) -> Option<String> {
-    if index + 1 < text.chars().count() {
-        return Some(format!("{}{}", c, text.chars().nth(index + 1).unwrap()));
+fn word_on_prefix(str_indices: &[char], index: usize) -> Option<String> {
+    if index + 1 < str_indices.len() {
+        return Some(format!("{}{}", str_indices[index], str_indices[index + 1]));
     }
     None
 }
 
-fn word_on_suffix(text: &str, c: &str, index: usize) -> Option<String> {
+fn word_on_suffix(str_indices: &[char], index: usize) -> Option<String> {
     if index > 0 {
-        return Some(format!("{}{}", text.chars().nth(index - 1).unwrap(), c));
+        return Some(format!("{}{}", str_indices[index - 1], str_indices[index]));
     }
     None
 }
@@ -63,17 +63,18 @@ fn word_on_suffix(text: &str, c: &str, index: usize) -> Option<String> {
 /// on Wikipedia.
 pub fn convert(text: &str) -> String {
     let mut ret = String::with_capacity(text.len());
+    let str_indices: Vec<char> = text.chars().collect();
     for (index, char_) in text.chars().enumerate() {
         let char_ = char_.to_string();
         let str_ = &char_[..];
         if T2S_EXCLUDE.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(text, str_, index) {
+            if let Some(prefix) = word_on_prefix(&str_indices, index) {
                 if T2S_EXCLUDE[str_].contains(&prefix[..]) {
                     ret.push_str(str_);
                     continue
                 }
             }
-            if let Some(suffix) = word_on_suffix(text, str_, index) {
+            if let Some(suffix) = word_on_suffix(&str_indices, index) {
                 if T2S_EXCLUDE[str_].contains(&suffix[..]) {
                     ret.push_str(str_);
                     continue
@@ -81,13 +82,13 @@ pub fn convert(text: &str) -> String {
             }
         }
         if T2S_SPECIAL_CONVERT_TYPE_1.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(text, str_, index) {
+            if let Some(prefix) = word_on_prefix(&str_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
-            if let Some(suffix) = word_on_suffix(text, str_, index) {
+            if let Some(suffix) = word_on_suffix(&str_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
@@ -96,13 +97,13 @@ pub fn convert(text: &str) -> String {
             ret.push_str(str_);
             continue
         } else if T2S_SPECIAL_CONVERT_TYPE_2.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(text, str_, index) {
+            if let Some(prefix) = word_on_prefix(&str_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
-            if let Some(suffix) = word_on_suffix(text, str_, index) {
+            if let Some(suffix) = word_on_suffix(&str_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
