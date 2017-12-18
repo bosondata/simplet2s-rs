@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/bosondata/simplet2s-rs.svg?branch=master)](https://travis-ci.org/bosondata/simplet2s-rs)
 [![Crates.io](https://img.shields.io/crates/v/simplet2s.svg)](https://crates.io/crates/simplet2s)
 [![docs.rs](https://docs.rs/simplet2s/badge.svg)](https://docs.rs/simplet2s/)
+[![PyPI](https://img.shields.io/pypi/v/simplet2s.svg)](https://pypi.python.org/pypi/simplet2s)
 
 A simple traditional Chinese to simplified Chinese converter
 
