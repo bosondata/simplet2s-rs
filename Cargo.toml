@@ -1,6 +1,7 @@
 [package]
 authors = ["Messense Lv <messense@icloud.com>"]
 build = "build.rs"
+description = "A simple traditional Chinese to simplified Chinese converter"
 homepage = "https://github.com/bosondata/simplet2s-rs"
 license = "MIT"
 name = "simplet2s"
