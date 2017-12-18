@@ -16,3 +16,6 @@ phf_codegen = "0.7"
 lazy_static = "1.0"
 maplit = "1.0"
 phf = "0.7"
+
+[features]
+unstable = []
