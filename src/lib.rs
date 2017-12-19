@@ -44,18 +44,30 @@ lazy_static! {
     };
 }
 
-fn word_on_prefix(char_indices: &[char], index: usize) -> Option<String> {
-    if index + 1 < char_indices.len() {
-        // XXX: Avoid allocation?
-        return Some(format!("{}{}", char_indices[index], char_indices[index + 1]));
+fn word_on_prefix<'a>(text: &'a str, char_indices: &'a [usize], index: usize) -> Option<&'a str> {
+    let char_count = char_indices.len();
+    if index + 1 < char_count {
+        let byte_start = char_indices[index];
+        let byte_end = if index + 2 < char_count {
+            char_indices[index + 2]
+        } else {
+            text.len()
+        };
+        return unsafe { Some(text.get_unchecked(byte_start..byte_end)) };
     }
     None
 }
 
-fn word_on_suffix(char_indices: &[char], index: usize) -> Option<String> {
+fn word_on_suffix<'a>(text: &'a str, char_indices: &'a [usize], index: usize) -> Option<&'a str> {
     if index > 0 {
-        // XXX: Avoid allocation?
-        return Some(format!("{}{}", char_indices[index - 1], char_indices[index]));
+        let char_count = char_indices.len();
+        let byte_start = char_indices[index - 1];
+        let byte_end = if index + 1 < char_count {
+            char_indices[index + 1]
+        } else {
+            text.len()
+        };
+        return unsafe { Some(text.get_unchecked(byte_start..byte_end)) };
     }
     None
 }
@@ -65,18 +77,18 @@ fn word_on_suffix(char_indices: &[char], index: usize) -> Option<String> {
 /// on Wikipedia.
 pub fn convert(text: &str) -> String {
     let mut ret = String::with_capacity(text.len());
-    let char_indices: Vec<char> = text.chars().collect();
-    for (index, char_) in char_indices.iter().enumerate() {
+    let char_indices: Vec<usize> = text.char_indices().map(|x| x.0).collect();
+    for (index, char_) in text.chars().enumerate() {
         let char_ = char_.to_string();
         let str_ = &char_[..];
         if T2S_EXCLUDE.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(&char_indices, index) {
+            if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if T2S_EXCLUDE[str_].contains(&prefix[..]) {
                     ret.push_str(str_);
                     continue
                 }
             }
-            if let Some(suffix) = word_on_suffix(&char_indices, index) {
+            if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
                 if T2S_EXCLUDE[str_].contains(&suffix[..]) {
                     ret.push_str(str_);
                     continue
@@ -84,13 +96,13 @@ pub fn convert(text: &str) -> String {
             }
         }
         if T2S_SPECIAL_CONVERT_TYPE_1.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(&char_indices, index) {
+            if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
-            if let Some(suffix) = word_on_suffix(&char_indices, index) {
+            if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
@@ -99,13 +111,13 @@ pub fn convert(text: &str) -> String {
             ret.push_str(str_);
             continue
         } else if T2S_SPECIAL_CONVERT_TYPE_2.contains_key(str_) {
-            if let Some(prefix) = word_on_prefix(&char_indices, index) {
+            if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
-            if let Some(suffix) = word_on_suffix(&char_indices, index) {
+            if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
                 if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
