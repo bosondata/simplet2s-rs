@@ -78,9 +78,9 @@ fn word_on_suffix<'a>(text: &'a str, char_indices: &'a [usize], index: usize) ->
 pub fn convert(text: &str) -> String {
     let mut ret = String::with_capacity(text.len());
     let char_indices: Vec<usize> = text.char_indices().map(|x| x.0).collect();
+    let mut char_buf = [0; 4];
     for (index, char_) in text.chars().enumerate() {
-        let char_ = char_.to_string();
-        let str_ = &char_[..];
+        let str_: &str = char_.encode_utf8(&mut char_buf);
         if T2S_EXCLUDE.contains_key(str_) {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if T2S_EXCLUDE[str_].contains(&prefix[..]) {
