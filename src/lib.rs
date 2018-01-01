@@ -81,15 +81,15 @@ pub fn convert(text: &str) -> String {
     let mut char_buf = [0; 4];
     for (index, char_) in text.chars().enumerate() {
         let str_: &str = char_.encode_utf8(&mut char_buf);
-        if T2S_EXCLUDE.contains_key(str_) {
+        if let Some(inner_set) = T2S_EXCLUDE.get(str_) {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
-                if T2S_EXCLUDE[str_].contains(&prefix[..]) {
+                if inner_set.contains(&prefix[..]) {
                     ret.push_str(str_);
                     continue
                 }
             }
             if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
-                if T2S_EXCLUDE[str_].contains(&suffix[..]) {
+                if inner_set.contains(&suffix[..]) {
                     ret.push_str(str_);
                     continue
                 }
