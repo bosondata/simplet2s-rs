@@ -95,30 +95,30 @@ pub fn convert(text: &str) -> String {
                 }
             }
         }
-        if T2S_SPECIAL_CONVERT_TYPE_1.contains_key(str_) {
+        if let Some(inner_map) = T2S_SPECIAL_CONVERT_TYPE_1.get(str_) {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
-                if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&prefix[..]) {
+                if let Some(val) = inner_map.get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
             if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
-                if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_1[str_].get(&suffix[..]) {
+                if let Some(val) = inner_map.get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
             ret.push_str(str_);
             continue
-        } else if T2S_SPECIAL_CONVERT_TYPE_2.contains_key(str_) {
+        } else if let Some(inner_map) = T2S_SPECIAL_CONVERT_TYPE_2.get(str_) {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
-                if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&prefix[..]) {
+                if let Some(val) = inner_map.get(&prefix[..]) {
                     ret.push_str(val);
                     continue;
                 }
             }
             if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
-                if let Some(val) = T2S_SPECIAL_CONVERT_TYPE_2[str_].get(&suffix[..]) {
+                if let Some(val) = inner_map.get(&suffix[..]) {
                     ret.push_str(val);
                     continue;
                 }
