@@ -37,3 +37,11 @@ fn bench_t2s_special_convert_type_2(b: &mut Bencher) {
         convert("企畫 計畫 企劃 計劃 畫圖 畫畫");
     });
 }
+
+#[bench]
+fn bench_t2s_non_convert(b: &mut Bencher) {
+    convert("英特尔宣布“漏洞门”应对计划：为5年内90%处理器提供补丁，下周末前完成");
+    b.iter(|| {
+        convert("英特尔宣布“漏洞门”应对计划：为5年内90%处理器提供补丁，下周末前完成");
+    });
+}
