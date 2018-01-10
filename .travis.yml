@@ -32,6 +32,12 @@ script:
   - travis-cargo test
   - travis-cargo --only nightly bench
   - |
+    if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
+      bash <(curl https://raw.githubusercontent.com/xd009642/tarpaulin/master/travis-install.sh)
+      cargo tarpaulin --out Xml
+      bash <(curl -s https://codecov.io/bash)
+    fi
+  - |
     if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
       python setup.py sdist
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 sh manylinux.sh;
