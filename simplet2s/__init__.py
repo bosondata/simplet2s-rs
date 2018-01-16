@@ -13,18 +13,10 @@ else:
     text_type = str
 
 
-def decode_str(s):
-    """Decodes a FfiStr"""
-    try:
-        if s.len == 0:
-            return u''
-        return ffi.unpack(s.data, s.len).decode('utf-8', 'replace')
-    finally:
-        lib.simplet2s_str_free(ffi.addressof(s))
-
-
 def convert(text):
     if isinstance(text, text_type):
         text = text.encode('utf-8')
     r = lib.simplet2s_convert(text)
-    return decode_str(r)
+    r = ffi.gc(r, lib.simplet2s_str_free)
+    s = ffi.string(r).decode('utf-8', 'replace')
+    return s
