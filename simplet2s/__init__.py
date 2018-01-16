@@ -5,7 +5,7 @@ import sys
 from ._native import ffi, lib
 
 
-__version__ = u'0.1.4'
+__version__ = u'0.1.5'
 
 PY2 = sys.version_info[0] == 2
 
