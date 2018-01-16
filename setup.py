@@ -27,6 +27,7 @@ setup(
     platforms='any',
     setup_requires=['milksnake'],
     install_requires=['milksnake'],
+    tests_require=['pytest'],
     milksnake_tasks=[
         build_native
     ]

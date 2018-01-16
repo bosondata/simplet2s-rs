@@ -26,12 +26,13 @@ before_script:
   - virtualenv -p python3 ~/virtualenv
   - source ~/virtualenv/bin/activate
   - export PATH=$HOME/virtualenv/bin:$PATH
-  - pip install 'travis-cargo<0.2'
+  - pip install 'travis-cargo<0.2' pytest
 
 script:
   - travis-cargo test
   - travis-cargo --only nightly bench
   - python setup.py develop
+  - pytest -v tests
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
       bash <(curl https://raw.githubusercontent.com/xd009642/tarpaulin/master/travis-install.sh)
