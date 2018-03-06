@@ -20,7 +20,8 @@ matrix:
 before_script:
   - if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then
       brew update;
-      brew install python libffi;
+      brew upgrade python;
+      brew install libffi;
     fi
   - sudo easy_install virtualenv
   - virtualenv -p python3 ~/virtualenv
