@@ -8,7 +8,7 @@ version = "0.1"
 path = "../"
 
 [build-dependencies]
-cbindgen = "0.4"
+cbindgen = "0.5"
 
 [lib]
 name = "simplet2s"
