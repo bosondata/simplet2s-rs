@@ -18,7 +18,10 @@ else:
 def convert(text):
     if isinstance(text, text_type):
         text = text.encode('utf-8')
-    r = lib.simplet2s_convert(text)
-    r = ffi.gc(r, lib.simplet2s_str_free)
-    s = ffi.string(r).decode('utf-8', 'replace')
-    return s
+    text_len = len(text)
+    try:
+        r = lib.simplet2s_convert(text, text_len)
+        s = ffi.unpack(r, text_len).decode('utf-8', 'replace')
+        return s
+    finally:
+        lib.simplet2s_str_free(r, text_len)

@@ -2,13 +2,17 @@
 name = "simplet2s-capi"
 version = "0.1.5"
 authors = ["Messense Lv <messense@icloud.com>"]
+publish = false
+
+[dependencies]
+c_fixed_string = "0.2"
 
 [dependencies.simplet2s]
 version = "0.1"
 path = "../"
 
 [build-dependencies]
-cbindgen = "0.5"
+cbindgen = "0.6"
 
 [lib]
 name = "simplet2s"
