@@ -4,10 +4,6 @@ rust:
   - stable
   - nightly
 
-cache:
-  directories:
-  - target
-
 services:
   - docker
 
@@ -18,20 +14,20 @@ matrix:
       rust: stable
 
 before_script:
+  - if [ "${TRAVIS_OS_NAME:-}" == "linux" ]; then
+      sudo apt-get install -y python3-pip;
+    fi
   - if [ "${TRAVIS_OS_NAME:-}" == "osx" ]; then
       brew update;
       brew upgrade python;
       brew install libffi;
     fi
-  - virtualenv -p python3 ~/virtualenv
-  - source ~/virtualenv/bin/activate
-  - export PATH=$HOME/virtualenv/bin:$PATH
-  - pip install 'travis-cargo<0.2' pytest
+  - sudo pip3 install 'travis-cargo<0.2' pytest
 
 script:
   - travis-cargo test
   - travis-cargo --only nightly bench
-  - python setup.py develop
+  - pip3 install --user -e .
   - pytest -v tests
   - |
     if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
@@ -41,15 +37,15 @@ script:
     fi
   - |
     if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-      python setup.py sdist
+      python3 setup.py sdist
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 sh manylinux.sh;
       docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_i686 sh manylinux.sh;
-      pip install twine;
+      sudo pip3 install twine;
       twine upload --skip-existing dist/*;
     fi
   - |
     if [[ "${TRAVIS_TAG:-}" != "" && "$TRAVIS_OS_NAME" == "osx" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-      pip install -U wheel twine;
-      python setup.py bdist_wheel;
+      sudo pip3 install -U wheel twine;
+      python3 setup.py bdist_wheel;
       twine upload --skip-existing dist/*;
     fi
