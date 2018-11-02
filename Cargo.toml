@@ -17,5 +17,12 @@ lazy_static = "1.0"
 maplit = "1.0"
 phf = "0.7"
 
+[dev-dependencies]
+criterion = "0.2"
+
 [features]
 unstable = []
+
+[[bench]]
+name = "simple"
+harness = false
