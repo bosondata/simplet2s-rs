@@ -82,13 +82,13 @@ pub fn convert(text: &str) -> String {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if inner_set.contains(&prefix[..]) {
                     ret.push_str(str_);
-                    continue
+                    continue;
                 }
             }
             if let Some(suffix) = word_on_suffix(&text, &char_indices, index) {
                 if inner_set.contains(&suffix[..]) {
                     ret.push_str(str_);
-                    continue
+                    continue;
                 }
             }
         }
@@ -106,7 +106,7 @@ pub fn convert(text: &str) -> String {
                 }
             }
             ret.push_str(str_);
-            continue
+            continue;
         } else if let Some(inner_map) = T2S_SPECIAL_CONVERT_TYPE_2.get(str_) {
             if let Some(prefix) = word_on_prefix(&text, &char_indices, index) {
                 if let Some(val) = inner_map.get(&prefix[..]) {
@@ -140,12 +140,18 @@ mod tests {
             &convert("《第一批异体字整理表》已將「託」與「托」合併為「托」"),
             "《第一批异体字整理表》已将「托」与「托」合并为「托」"
         );
-        assert_eq!(&convert("宁是貯的本字，与寧没有关系"), "宁是贮的本字，与宁没有关系");
+        assert_eq!(
+            &convert("宁是貯的本字，与寧没有关系"),
+            "宁是贮的本字，与宁没有关系"
+        );
     }
 
     #[test]
     fn test_t2s_exclude() {
-        assert_eq!(&convert("瞭读liǎo(瞭解)时，简作「了」"), "了读liǎo(了解)时，简作「了」");
+        assert_eq!(
+            &convert("瞭读liǎo(瞭解)时，简作「了」"),
+            "了读liǎo(了解)时，简作「了」"
+        );
         assert_eq!(&convert("西漢有御史大夫兒寬"), "西汉有御史大夫兒宽");
         assert_eq!(
             &convert("「於」曾被《第一批異體字整理表》視為「于」的異體字廢除，後來恢復為規範字，但只用作姓氏人名，如樊於期，其他情況仍用「于」。"),
@@ -163,7 +169,10 @@ mod tests {
             &convert("「藉」其他意义仍然保留的，藉口、憑藉的藉（jiè）简化作借，慰藉（jiè）、狼藉（jí）等的藉仍用藉。"),
             "「藉」其他意义仍然保留的，借口、凭借的藉（jiè）简化作借，慰藉（jiè）、狼藉（jí）等的藉仍用藉。"
         );
-        assert_eq!(&convert("而繁體字苧（zhù）是苧麻"), "而繁体字苧（zhù）是苎麻");
+        assert_eq!(
+            &convert("而繁體字苧（zhù）是苧麻"),
+            "而繁体字苧（zhù）是苎麻"
+        );
         assert_eq!(
             &convert("「乾」其他意义仍然保留的，乾坤、乾隆的乾不簡化为「干」，“乾燥”、“乾爹”的“乾”簡化為“干”"),
             "「乾」其他意义仍然保留的，乾坤、乾隆的乾不简化为「干」，“干燥”、“干爹”的“乾”简化为“干”"
@@ -172,7 +181,13 @@ mod tests {
 
     #[test]
     fn test_t2s_special_convert_type_2() {
-        assert_eq!(&convert("作姓氏時「鍾」可以簡化為「锺"), "作姓氏时「钟」可以简化为「锺");
-        assert_eq!(&convert("企畫 計畫 企劃 計劃 畫圖 畫畫"), "企划 计划 企划 计划 画图 画画");
+        assert_eq!(
+            &convert("作姓氏時「鍾」可以簡化為「锺"),
+            "作姓氏时「钟」可以简化为「锺"
+        );
+        assert_eq!(
+            &convert("企畫 計畫 企劃 計劃 畫圖 畫畫"),
+            "企划 计划 企划 计划 画图 画画"
+        );
     }
 }
