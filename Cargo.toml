@@ -11,12 +11,12 @@ repository = "https://github.com/bosondata/simplet2s-rs"
 version = "0.1.5"
 
 [build-dependencies]
-phf_codegen = "0.7"
+phf_codegen = "0.8"
 
 [dependencies]
 lazy_static = "1.0"
 maplit = "1.0"
-phf = "0.7"
+phf = "0.8"
 
 [dev-dependencies]
 criterion = "0.3"
