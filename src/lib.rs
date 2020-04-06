@@ -1,10 +1,7 @@
-extern crate phf;
-#[macro_use]
-extern crate lazy_static;
-#[macro_use]
-extern crate maplit;
-
 use std::collections::{HashMap, HashSet};
+
+use lazy_static::lazy_static;
+use maplit::{hashmap, hashset};
 
 include!(concat!(env!("OUT_DIR"), "/codegen.rs"));
 

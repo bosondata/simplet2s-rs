@@ -1,6 +1,3 @@
-extern crate simplet2s;
-extern crate c_fixed_string;
-
 use std::os::raw::c_char;
 use std::mem;
 
