@@ -15,7 +15,7 @@ Add it to your ``Cargo.toml``:
 
 ```toml
 [dependencies]
-simplet2s = "0.1"
+simplet2s = "0.2"
 ```
 
 Add ``extern crate simplet2s`` to your crate root and your're good to go!
@@ -29,6 +29,23 @@ fn main() {
     let simplified = simplet2s::convert("憂鬱的台灣烏龜");
     println!("{}", simplified);
 }
+```
+
+## Python package
+
+There is also a Python package named `simplet2s`, you can install it via `pip`:
+
+```bash
+pip install -U simplet2s
+```
+
+Usage example:
+
+```python
+import simplet2s
+
+if __name__ == '__main__':
+    print(simplet2s.convert("憂鬱的台灣烏龜"))
 ```
 
 ## License

@@ -19,7 +19,7 @@ def build_native(spec):
 
 setup(
     name='simplet2s',
-    version='0.1.8',
+    version='0.2.0',
     url='https://github.com/bosondata/simplet2s-rs',
     description='A simple traditional Chinese to simplified Chinese converter',
     packages=find_packages(),
