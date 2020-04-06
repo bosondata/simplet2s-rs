@@ -15,7 +15,11 @@ fn main() {
         map.entry(tr, &format!("\"{}\"", si));
     }
     let mut file = BufWriter::new(File::create(&path).unwrap());
-    write!(&mut file, "static T2S_MAP: phf::Map<&'static str, &'static str> = ").unwrap();
+    write!(
+        &mut file,
+        "static T2S_MAP: phf::Map<&'static str, &'static str> = "
+    )
+    .unwrap();
     write!(&mut file, "{}", map.build()).unwrap();
     write!(&mut file, ";\n").unwrap();
 }
