@@ -1,6 +1,7 @@
 # simplet2s
 
-[![Build Status](https://travis-ci.org/bosondata/simplet2s-rs.svg?branch=master)](https://travis-ci.org/bosondata/simplet2s-rs)
+[![Rust](https://github.com/bosondata/simplet2s-rs/workflows/Rust/badge.svg)](https://github.com/bosondata/simplet2s-rs/actions?query=workflow%3ARust)
+[![Python](https://github.com/bosondata/simplet2s-rs/workflows/Python/badge.svg)](https://github.com/bosondata/simplet2s-rs/actions?query=workflow%3APython)
 [![codecov](https://codecov.io/gh/bosondata/simplet2s-rs/branch/master/graph/badge.svg)](https://codecov.io/gh/bosondata/simplet2s-rs)
 [![Crates.io](https://img.shields.io/crates/v/simplet2s.svg)](https://crates.io/crates/simplet2s)
 [![docs.rs](https://docs.rs/simplet2s/badge.svg)](https://docs.rs/simplet2s/)
