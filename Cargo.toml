@@ -19,7 +19,7 @@ maplit = "1.0"
 phf = "0.7"
 
 [dev-dependencies]
-criterion = "0.2"
+criterion = "0.3"
 
 [features]
 unstable = []
